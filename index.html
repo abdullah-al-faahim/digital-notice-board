@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Notice Board</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.cdnfonts.com/css/seven-segment" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .notice-card {
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    }
+
+    .notice-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    #clock {
+      font-family: 'Seven Segment', sans-serif;
+      font-size: 3rem;
+      /* Adjust as needed */
+      font-weight: bold;
+      color: #0F0;
+      /* Bright green for digital display */
+      text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+      /* Subtle glow */
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1000;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black w/ opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+      max-width: 500px;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 text-gray-800">
+
+  <div class="container mx-auto p-4 md:p-8 max-w-4xl">
+
+    <!-- Header -->
+    <header class="text-center mb-8">
+      <!-- Channel i Logo -->
+      <img src="./Channel-i.svg" alt="Channel i Logo" class="mx-auto mb-4" style="max-height: 80px;">
+      <h1 class="text-4xl font-bold text-gray-900">Channel i MCR Digital Notice Board</h1>
+      <p class="text-gray-600 mt-2">Live updates for programs and schedules.</p>
+      <!-- Digital Clock -->
+      <div id="clock-container" class="mt-4 inline-block px-4 pt-4 pb-2 rounded-lg" style="background-color: #333;">
+        <p class="text-lg font-semibold text-gray-800">
+          <span id="clock" class="text-indigo-600"></span>
+        </p>
+      </div>
+    </header>
+
+    <!-- Add New Notice Form -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-2xl font-semibold mb-4">Add a New Update</h2>
+      <form id="add-notice-form">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="program-name" class="block text-sm font-medium text-gray-700 mb-1">Program Name</label>
+            <input type="text" id="program-name" name="program-name" placeholder="e.g., Promo / Title / Program"
+              required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+          </div>
+          <div>
+            <label for="duration" class="block text-sm font-medium text-gray-700 mb-1">Duration / Time</label>
+            <input type="text" id="duration" name="duration" placeholder="e.g., 2 min / 5 min/ 20 min / 30 min" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+          </div>
+        </div>
+        <div class="mt-4">
+          <label for="additional-message" class="block text-sm font-medium text-gray-700 mb-1">Additional
+            Message</label>
+          <textarea id="additional-message" name="additional-message" rows="3"
+            placeholder="e.g., Special guest appearance, important announcement, etc."
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+        </div>
+        <div class="flex items-center justify-between mt-6">
+          <div class="flex items-center">
+            <input id="important-toggle" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+            <label for="important-toggle" class="ml-2 block text-sm text-gray-900">Mark as Important</label>
+          </div>
+          <button type="submit"
+            class="bg-indigo-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+            Post Update
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Notices Display -->
+    <div>
+      <h2 class="text-2xl font-semibold mb-4 text-gray-900">Current Programs</h2>
+      <div id="notice-board" class="grid grid-cols-1 gap-6">
+        <!-- Notices will be dynamically inserted here -->
+        <p id="no-notices-message" class="text-gray-500 col-span-full text-center">No notices posted yet. Add one above!
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Edit Notice Modal -->
+  <div id="edit-modal" class="modal">
+    <div class="modal-content">
+      <h2 class="text-2xl font-semibold mb-4">Edit Update</h2>
+      <form id="edit-notice-form">
+        <input type="hidden" id="edit-notice-id">
+        <div class="grid grid-cols-1 gap-4">
+          <div>
+            <label for="edit-program-name" class="block text-sm font-medium text-gray-700 mb-1">Program Name</label>
+            <input type="text" id="edit-program-name" name="edit-program-name" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+          </div>
+          <div>
+            <label for="edit-duration" class="block text-sm font-medium text-gray-700 mb-1">Duration / Time</label>
+            <input type="text" id="edit-duration" name="edit-duration" required
+              class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
+          </div>
+        </div>
+        <div class="mt-4">
+          <label for="edit-additional-message" class="block text-sm font-medium text-gray-700 mb-1">Additional
+            Message</label>
+          <textarea id="edit-additional-message" name="edit-additional-message" rows="3"
+            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
+        </div>
+        <div class="flex items-center justify-between mt-6">
+          <div class="flex items-center">
+            <input id="edit-important-toggle" type="checkbox" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+            <label for="edit-important-toggle" class="ml-2 block text-sm text-gray-900">Mark as Important</label>
+          </div>
+          <div>
+          <button type="button" onclick="closeEditModal()"
+            class="bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition mr-2">
+            Cancel
+          </button>
+          <button type="submit"
+            class="bg-indigo-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+            Save Changes
+          </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // --- Clock Functionality ---
+    const clockElement = document.getElementById('clock');
+
+    function updateClock() {
+      const now = new Date();
+      const options = {
+        timeZone: 'Asia/Dhaka', // Bangladesh Standard Time
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true // Revert to true for 12-hour format
+      };
+      let timeString = now.toLocaleTimeString('en-US', options);
+      timeString = timeString.replace(/\s[AP]M$/, ''); // Remove AM/PM
+      clockElement.textContent = timeString;
+    }
+
+    // Update the clock immediately and then every second
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // --- Notice Board Functionality ---
+    const noticeForm = document.getElementById('add-notice-form');
+    const programNameInput = document.getElementById('program-name');
+    const durationInput = document.getElementById('duration');
+    const additionalMessageInput = document.getElementById('additional-message');
+    const importantToggle = document.getElementById('important-toggle');
+    const noticeBoard = document.getElementById('notice-board');
+    const noNoticesMessage = document.getElementById('no-notices-message');
+
+    const editModal = document.getElementById('edit-modal');
+    const editNoticeForm = document.getElementById('edit-notice-form');
+    const editNoticeIdInput = document.getElementById('edit-notice-id');
+    const editProgramNameInput = document.getElementById('edit-program-name');
+    const editDurationInput = document.getElementById('edit-duration');
+    const editAdditionalMessageInput = document.getElementById('edit-additional-message');
+    const editImportantToggle = document.getElementById('edit-important-toggle');
+
+    // Load notices from local storage or initialize an empty array
+    let notices = JSON.parse(localStorage.getItem('digitalNotices')) || [];
+
+    // Function to render notices to the board
+    const renderNotices = () => {
+      // Clear the board first
+      noticeBoard.innerHTML = '';
+
+      if (notices.length === 0) {
+        if (!document.getElementById('no-notices-message')) {
+          noticeBoard.innerHTML = '<p id="no-notices-message" class="text-gray-500 col-span-full text-center">No notices posted yet. Add one above!</p>';
+        }
+      } else {
+        const existingMessage = document.getElementById('no-notices-message');
+        if (existingMessage) existingMessage.remove();
+        // Sort notices to show the newest first
+        const sortedNotices = [...notices].sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+
+        sortedNotices.forEach(notice => {
+          const noticeElement = document.createElement('div');
+          noticeElement.className = 'notice-card bg-white p-5 rounded-lg border border-gray-200 flex flex-col';
+
+          const formattedDate = new Date(notice.timestamp).toLocaleString('en-US', {
+            dateStyle: 'medium',
+            timeStyle: 'short'
+          });
+
+          noticeElement.innerHTML = `
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-indigo-700 mb-2">${notice.important ? '&#9733; ' : ''}${notice.program}</h3>
+                            <p class="text-gray-700"><span class="font-semibold">Duration:</span> ${notice.duration}</p>
+                            ${notice.message ? `<p class="text-gray-600 mt-2"><strong>Message:</strong> ${notice.message}</p>` : ''}
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-500 flex justify-between items-center">
+                            <span>Posted: ${formattedDate}</span>
+                            <div>
+                                <button onclick="openEditModal('${notice.id}')" class="text-blue-500 hover:text-blue-700 font-semibold focus:outline-none mr-2">Edit</button>
+                                <button onclick="deleteNotice('${notice.id}')" class="text-red-500 hover:text-red-700 font-semibold focus:outline-none">Delete</button>
+                            </div>
+                        </div>
+                    `;
+          noticeBoard.appendChild(noticeElement);
+        });
+      }
+    };
+
+    // Function to save notices to local storage
+    const saveNotices = () => {
+      localStorage.setItem('digitalNotices', JSON.stringify(notices));
+    };
+
+    // Function to add a new notice
+    const addNotice = (program, duration, message, important) => {
+      const newNotice = {
+        id: 'notice-' + Date.now(), // Unique ID for each notice
+        program,
+        duration,
+        message,
+        important,
+        timestamp: new Date().toISOString()
+      };
+      notices.push(newNotice);
+      saveNotices();
+      renderNotices();
+    };
+
+    // Function to delete a notice
+    window.deleteNotice = (id) => {
+      notices = notices.filter(notice => notice.id !== id);
+      saveNotices();
+      renderNotices();
+    };
+
+    // Function to open the edit modal
+    window.openEditModal = (id) => {
+      const noticeToEdit = notices.find(notice => notice.id === id);
+      if (noticeToEdit) {
+        editNoticeIdInput.value = noticeToEdit.id;
+        editProgramNameInput.value = noticeToEdit.program;
+        editDurationInput.value = noticeToEdit.duration;
+        editAdditionalMessageInput.value = noticeToEdit.message;
+        editImportantToggle.checked = noticeToEdit.important || false;
+        editModal.style.display = 'block';
+      }
+    };
+
+    // Function to close the edit modal
+    window.closeEditModal = () => {
+      editModal.style.display = 'none';
+    };
+
+    // Function to update a notice
+    const updateNotice = (id, program, duration, message, important) => {
+      const noticeIndex = notices.findIndex(notice => notice.id === id);
+      if (noticeIndex > -1) {
+        notices[noticeIndex].program = program;
+        notices[noticeIndex].duration = duration;
+        notices[noticeIndex].message = message;
+        notices[noticeIndex].important = important;
+        saveNotices();
+        renderNotices();
+        closeEditModal();
+      }
+    };
+
+    // Event listener for add form submission
+    noticeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const programName = programNameInput.value.trim();
+      const duration = durationInput.value.trim();
+      const additionalMessage = additionalMessageInput.value.trim();
+      const important = importantToggle.checked;
+
+      if (programName && duration) {
+        addNotice(programName, duration, additionalMessage, important);
+        noticeForm.reset();
+        programNameInput.focus();
+      }
+    });
+
+    // Event listener for edit form submission
+    editNoticeForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const id = editNoticeIdInput.value;
+      const programName = editProgramNameInput.value.trim();
+      const duration = editDurationInput.value.trim();
+      const additionalMessage = editAdditionalMessageInput.value.trim();
+      const important = editImportantToggle.checked;
+
+      if (id && programName && duration) {
+        updateNotice(id, programName, duration, additionalMessage, important);
+      }
+    });
+
+    // Close modal if user clicks outside of it
+    window.onclick = function (event) {
+      if (event.target == editModal) {
+        closeEditModal();
+      }
+    }
+
+    // Initial render on page load
+    renderNotices();
+  </script>
+
+</body>
+
+</html>
