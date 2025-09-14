@@ -1,66 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Channel i MCR</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Channel i MCR</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
+
 <body class="bg-gray-100 flex items-center justify-center h-screen">
 
-  <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-    <div class="text-center">
-      <img src="./Channel-i.svg" alt="Channel i Logo" class="mx-auto mb-4" style="max-height: 80px;">
-      <h1 class="text-2xl font-bold text-gray-900">Channel i MCR Login</h1>
+    <div class="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+        <div class="text-center">
+            <img src="./Channel-i.svg" alt="Channel i Logo" class="mx-auto mb-4" style="max-height: 80px;">
+            <h1 class="text-2xl font-bold text-gray-900">Channel i MCR Login</h1>
+        </div>
+        <form id="login-form" class="mt-8 space-y-6">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="username" class="sr-only">Username</label>
+                    <input id="username" name="username" type="text" required
+                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        placeholder="Username">
+                </div>
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input id="password" name="password" type="password" required
+                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        placeholder="Password">
+                </div>
+            </div>
+
+            <div>
+                <button type-="submit"
+                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    Sign in
+                </button>
+            </div>
+            <p id="error-message" class="text-center text-red-500 text-sm"></p>
+        </form>
     </div>
-    <form id="login-form" class="mt-8 space-y-6">
-      <div class="rounded-md shadow-sm -space-y-px">
-        <div>
-          <label for="username" class="sr-only">Username</label>
-          <input id="username" name="username" type="text" required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Username">
-        </div>
-        <div>
-          <label for="password" class="sr-only">Password</label>
-          <input id="password" name="password" type="password" required
-            class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-            placeholder="Password">
-        </div>
-      </div>
 
-      <div>
-        <button type-="submit"
-          class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-          Sign in
-        </button>
-      </div>
-      <p id="error-message" class="text-center text-red-500 text-sm"></p>
-    </form>
-  </div>
+    <script>
+        const loginForm = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
 
-  <script>
-    const loginForm = document.getElementById('login-form');
-    const errorMessage = document.getElementById('error-message');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = loginForm.username.value;
+            const password = loginForm.password.value;
 
-    loginForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const username = loginForm.username.value;
-      const password = loginForm.password.value;
-
-      if (username === 'chi-mcr' && password === 'mcr1440') {
-        window.location.href = 'Digital Notice Board.html';
-      } else {
-        errorMessage.textContent = 'Invalid username or password.';
-      }
-    });
-  </script>
+            if (username === 'chi-mcr' && password === 'mcr1440') {
+                window.location.href = 'Digital Notice Board.html';
+            } else {
+                errorMessage.textContent = 'Invalid username or password.';
+            }
+        });
+    </script>
 
 </body>
+
 </html>
