@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MCR Digital - Login</title>
+    <title>MCR Digital Board</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://font.name/css/sutonnyomj.css">
     <link href="https://fonts.cdnfonts.com/css/seven-segment" rel="stylesheet">
     <style>
         body {
-            font-family: 'Tiro Bangla', 'Inter', sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         #login-section {
@@ -79,7 +79,15 @@
 <body class="bg-gray-100 text-gray-800">
 
     <div class="absolute top-4 right-4 z-20">
-        <button id="lang-switcher" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">বাংলা</button>
+        <button id="lang-switcher"
+            class="bg-indigo-600 text-white p-2 rounded-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9V3m0 18a9 9 0 01-9-9m9-9a9 9 0 00-9 9">
+                </path>
+            </svg>
+        </button>
     </div>
 
     <!-- Login Section -->
@@ -89,20 +97,24 @@
             <h1 class="text-2xl font-bold text-center text-gray-900 mb-6" data-lang="login_title">MCR Digital Login</h1>
             <form id="login-form">
                 <div class="mb-4">
-                    <label for="username" class="block text-sm font-medium text-gray-700 mb-1" data-lang="username_label">Username</label>
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-1"
+                        data-lang="username_label">Username</label>
                     <input type="text" id="username" name="username" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1" data-lang="password_label">Password</label>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1"
+                        data-lang="password_label">Password</label>
                     <input type="password" id="password" name="password" required
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                 </div>
                 <button type="submit"
-                    class="w-full bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" data-lang="login_button">
+                    class="w-full bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+                    data-lang="login_button">
                     Login
                 </button>
-                <p id="login-error" class="text-red-500 text-sm mt-4 text-center" style="display: none;" data-lang="login_error">Invalid
+                <p id="login-error" class="text-red-500 text-sm mt-4 text-center" style="display: none;"
+                    data-lang="login_error">Invalid
                     username or
                     password.</p>
             </form>
@@ -116,7 +128,7 @@
         <header class="text-center mb-8">
             <!-- Channel i Logo -->
             <img src="./Channel-i.svg" alt="Channel i Logo" class="mx-auto mb-4" style="max-height: 80px;">
-            <h1 class="text-4xl font-bold text-gray-900" data-lang="notice_board_title">MCR ডিজিটাল নোটিশ বোর্ড</h1>
+            <h1 class="text-4xl font-bold text-gray-900" data-lang="notice_board_title">MCR Digital Notice Board</h1>
             <p class="text-gray-600 mt-2" data-lang="notice_board_subtitle">Live updates for programs and schedules.</p>
             <!-- Digital Clock -->
             <div id="clock-container" class="mt-4 inline-block px-4 pt-4 pb-2 rounded-lg"
@@ -133,35 +145,42 @@
             <form id="add-notice-form">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label for="program-name" class="block text-sm font-medium text-gray-700 mb-1" data-lang="program_name_label">Program
+                        <label for="program-name" class="block text-sm font-medium text-gray-700 mb-1"
+                            data-lang="program_name_label">Program
                             Name</label>
                         <input type="text" id="program-name" name="program-name"
-                            data-lang-placeholder="program_name_placeholder" placeholder="e.g., Promo / Title / Program" required
+                            data-lang-placeholder="program_name_placeholder" placeholder="e.g., Promo / Title / Program"
+                            required
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                     </div>
                     <div>
-                        <label for="duration" class="block text-sm font-medium text-gray-700 mb-1" data-lang="duration_label">Duration /
+                        <label for="duration" class="block text-sm font-medium text-gray-700 mb-1"
+                            data-lang="duration_label">Duration /
                             Time</label>
-                        <input type="text" id="duration" name="duration"
-                            data-lang-placeholder="duration_placeholder" placeholder="e.g., 2 min / 5 min/ 20 min / 30 min" required
+                        <input type="text" id="duration" name="duration" data-lang-placeholder="duration_placeholder"
+                            placeholder="e.g., 2 min / 5 min/ 20 min / 30 min" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                     </div>
                 </div>
                 <div class="mt-4">
-                    <label for="additional-message" class="block text-sm font-medium text-gray-700 mb-1" data-lang="additional_message_label">Additional
+                    <label for="additional-message" class="block text-sm font-medium text-gray-700 mb-1"
+                        data-lang="additional_message_label">Additional
                         Message</label>
                     <textarea id="additional-message" name="additional-message" rows="3"
-                        data-lang-placeholder="additional_message_placeholder" placeholder="e.g., Special guest appearance, important announcement, etc."
+                        data-lang-placeholder="additional_message_placeholder"
+                        placeholder="e.g., Special guest appearance, important announcement, etc."
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
                 </div>
                 <div class="flex items-center justify-between mt-6">
                     <div class="flex items-center">
                         <input id="important-toggle" type="checkbox"
                             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="important-toggle" class="ml-2 block text-sm text-gray-900" data-lang="mark_as_important">Mark as Important</label>
+                        <label for="important-toggle" class="ml-2 block text-sm text-gray-900"
+                            data-lang="mark_as_important">Mark as Important</label>
                     </div>
                     <button type="submit"
-                        class="bg-indigo-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" data-lang="post_update_button">
+                        class="bg-indigo-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+                        data-lang="post_update_button">
                         Post Update
                     </button>
                 </div>
@@ -170,10 +189,12 @@
 
         <!-- Notices Display -->
         <div>
-            <h2 class="text-2xl font-semibold mb-4 text-gray-900" data-lang="current_programs_title">বর্তমান প্রোগ্রাম</h2>
+            <h2 class="text-2xl font-semibold mb-4 text-gray-900" data-lang="current_programs_title">Current Programs
+            </h2>
             <div id="notice-board" class="grid grid-cols-1 gap-6">
                 <!-- Notices will be dynamically inserted here -->
-                <p id="no-notices-message" class="text-gray-500 col-span-full text-center" data-lang="no_notices_message">No notices posted yet. Add
+                <p id="no-notices-message" class="text-gray-500 col-span-full text-center"
+                    data-lang="no_notices_message">No notices posted yet. Add
                     one above!
                 </p>
             </div>
@@ -189,20 +210,23 @@
                 <input type="hidden" id="edit-notice-id">
                 <div class="grid grid-cols-1 gap-4">
                     <div>
-                        <label for="edit-program-name" class="block text-sm font-medium text-gray-700 mb-1" data-lang="program_name_label">Program
+                        <label for="edit-program-name" class="block text-sm font-medium text-gray-700 mb-1"
+                            data-lang="program_name_label">Program
                             Name</label>
                         <input type="text" id="edit-program-name" name="edit-program-name" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                     </div>
                     <div>
-                        <label for="edit-duration" class="block text-sm font-medium text-gray-700 mb-1" data-lang="duration_label">Duration /
+                        <label for="edit-duration" class="block text-sm font-medium text-gray-700 mb-1"
+                            data-lang="duration_label">Duration /
                             Time</label>
                         <input type="text" id="edit-duration" name="edit-duration" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition">
                     </div>
                 </div>
                 <div class="mt-4">
-                    <label for="edit-additional-message" class="block text-sm font-medium text-gray-700 mb-1" data-lang="additional_message_label">Additional
+                    <label for="edit-additional-message" class="block text-sm font-medium text-gray-700 mb-1"
+                        data-lang="additional_message_label">Additional
                         Message</label>
                     <textarea id="edit-additional-message" name="edit-additional-message" rows="3"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"></textarea>
@@ -211,16 +235,19 @@
                     <div class="flex items-center">
                         <input id="edit-important-toggle" type="checkbox"
                             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="edit-important-toggle" class="ml-2 block text-sm text-gray-900" data-lang="mark_as_important">Mark as
+                        <label for="edit-important-toggle" class="ml-2 block text-sm text-gray-900"
+                            data-lang="mark_as_important">Mark as
                             Important</label>
                     </div>
                     <div>
                         <button type="button" onclick="closeEditModal()"
-                            class="bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition mr-2" data-lang="cancel_button">
+                            class="bg-gray-300 text-gray-800 font-semibold px-6 py-2 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 transition mr-2"
+                            data-lang="cancel_button">
                             Cancel
                         </button>
                         <button type="submit"
-                            class="bg-indigo-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition" data-lang="save_changes_button">
+                            class="bg-indigo-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition"
+                            data-lang="save_changes_button">
                             Save Changes
                         </button>
                     </div>
@@ -343,7 +370,7 @@
                     const dateHeader = document.createElement('div');
                     dateHeader.className = 'flex items-center my-4';
                     dateHeader.innerHTML = `
-                        <div class="w-20 text-right pr-4">
+                        <div class="w-16 text-right pr-2">
                             <p class="text-lg font-semibold text-gray-700">${formattedTimelineDate}</p>
                         </div>
                         <div class="flex-grow border-t border-gray-300"></div>
@@ -353,7 +380,7 @@
                     const noticesForDate = groupedNotices[dateStr];
                     noticesForDate.forEach(notice => {
                         const noticeElement = document.createElement('div');
-                        noticeElement.className = 'notice-card bg-white p-5 rounded-lg border border-gray-200 flex flex-col ml-24 mb-4'; // Indent notices
+                        noticeElement.className = 'notice-card bg-white p-5 rounded-lg border border-gray-200 flex flex-col ml-4 md:ml-24 mb-4'; // Indent notices
 
                         const formattedTime = new Date(notice.timestamp).toLocaleTimeString('en-US', {
                             timeStyle: 'short'
@@ -540,9 +567,14 @@
         };
 
         const langSwitcher = document.getElementById('lang-switcher');
-        let currentLang = localStorage.getItem('language') || 'bn';
+        let currentLang = localStorage.getItem('language') || 'en';
 
         const setLanguage = (lang) => {
+            if (lang === 'bn') {
+                document.body.style.fontFamily = "'SutonnyOMJ', 'Inter', sans-serif";
+            } else {
+                document.body.style.fontFamily = "'Inter', sans-serif";
+            }
             document.querySelectorAll('[data-lang]').forEach(el => {
                 const key = el.getAttribute('data-lang');
                 if (translations[lang] && translations[lang][key]) {
@@ -557,7 +589,6 @@
             });
             localStorage.setItem('language', lang);
             currentLang = lang;
-            langSwitcher.textContent = lang === 'en' ? 'বাংলা' : 'English';
             renderNotices(); // Re-render notices to apply language changes
         };
 
@@ -569,7 +600,7 @@
         // Set initial language
         setLanguage(currentLang);
 
-        
+
     </script>
 
 </body>
